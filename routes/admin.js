@@ -9,11 +9,10 @@ const requireAdminLogin = require('../middleware/requireAdminLogin')
 
 router.post('/signup-admin', (req, res) => {
     const {
-        name,
         email,
         password
     } = req.body
-    if(!name || !email || !password){
+    if(!email || !password){
         return res.status(422).json({error: "Please add all the fields"})
     }
     Admin.findOne({email: email})
@@ -24,7 +23,6 @@ router.post('/signup-admin', (req, res) => {
             bcrypt.hash(password, 12)
                 .then(hashedPassword => {
                     const admin = new Admin({
-                        name,
                         email,
                         password: hashedPassword,
 
